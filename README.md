@@ -18,7 +18,24 @@ Sles12sp3 comes with MariaDB, which is the prefered databse solution in a SLES d
 - Two: deploy devstack on sles12sp3 using a MariaDB backend
 
 
+### Zero: install and configure sles12 sp3 for devstack
+Basically install sles12 sp3 and configure as you would for any other deployment, but for SUSE :). 
+This place is got pretty good instructions: http://nubla.do/devstack-opensuse/
 
+A quick outline
+- Install Git
+- Configure stack user correctly. 
+- Install some packages
+```
+sudo zypper install -y git
+sudo zypper install -y lsb-release
+sudo zypper install -y python-os-testr
+```
+- Clone devstack repo
+- Stack
+
+
+NOTE: in sles12sp3 the "sudo" group is the "wheel" group.
 
 ### One: devstack on sles12 sp3 using mysql backend
 
@@ -39,3 +56,6 @@ At the end your repositories shoudl look something like so:
  1 | CloudSP3                           | CloudSP3                             | Yes     | (r ) Yes  | No      |https://download.opensuse.org/repositories/Cloud:/OpenStack:/Newton/SLE_12_SP3/
  2 | SDK12-SP3_12.3-0                   | SDK12-SP3 12.3-0                     | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr2
  3 | SLES12-SP3_12.3-0                  | SLES12-SP3 12.3-0                    | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr1```
+
+
+Next we need to mysql repositories. 
