@@ -22,3 +22,20 @@ Sles12sp3 comes with MariaDB, which is the prefered databse solution in a SLES d
 
 ### One: devstack on sles12 sp3 using mysql backend
 
+#### Add repositories
+We'll start with three repositories to add. Ideally we should remove all other respositories just to be safe that we don't pull the wrong pacakge version from somewhere unintended. Removing the respositories is not a must, but recommended. 
+
+We also assume that we have access to the sles12sp3 server iso and sles12sp3sdk iso. In the example below they have been "inserted" into cdrom 0 and cdrom 1. In reality the example comes from a vm, so the isos have been connected to the vm using virt-manager. 
+
+`sudo zypper ar https://download.opensuse.org/repositories/Cloud:/OpenStack:/Newton/SLE_12_SP3/ CloudSP3`
+
+To mount the iso as repositories you should use yast. I will not even attempt to put the commands because they simply would be wrong. Just use yast!
+
+At the end your repositories shoudl look something like so:
+
+```  
+ # | Alias                              | Name                                 | Enabled | GPG Check | Refresh | URI
+---+------------------------------------+--------------------------------------+---------+-----------+---------+--------------------------------------------------------------------------------
+ 1 | CloudSP3                           | CloudSP3                             | Yes     | (r ) Yes  | No      |https://download.opensuse.org/repositories/Cloud:/OpenStack:/Newton/SLE_12_SP3/
+ 2 | SDK12-SP3_12.3-0                   | SDK12-SP3 12.3-0                     | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr2
+ 3 | SLES12-SP3_12.3-0                  | SLES12-SP3 12.3-0                    | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr1```
