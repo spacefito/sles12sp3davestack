@@ -50,10 +50,11 @@ At the end your repositories shoudl look something like so:
 ---+------------------------------------+--------------------------------------+---------+-----------+---------+--------------------------------------------------------------------------------
  1 | CloudSP3                           | CloudSP3                             | Yes     | (r ) Yes  | No      |https://download.opensuse.org/repositories/Cloud:/OpenStack:/Newton/SLE_12_SP3/
  2 | SDK12-SP3_12.3-0                   | SDK12-SP3 12.3-0                     | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr2
- 3 | SLES12-SP3_12.3-0                  | SLES12-SP3 12.3-0                    | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr1```
-
+ 3 | SLES12-SP3_12.3-0                  | SLES12-SP3 12.3-0                    | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr1
+ ```
 
 #### Install some packages
+
 ```
 sudo zypper install -y git
 sudo zypper install -y lsb-release
