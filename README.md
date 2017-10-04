@@ -26,11 +26,6 @@ A quick outline
 - Install Git
 - Configure stack user correctly. 
 - Install some packages
-```
-sudo zypper install -y git
-sudo zypper install -y lsb-release
-sudo zypper install -y python-os-testr
-```
 - Clone devstack repo
 - Stack
 
@@ -39,7 +34,7 @@ NOTE: in sles12sp3 the "sudo" group is the "wheel" group.
 
 ### One: devstack on sles12 sp3 using mysql backend
 
-#### Add repositories
+#### Instsall basic repositories
 We'll start with three repositories to add. Ideally we should remove all other respositories just to be safe that we don't pull the wrong pacakge version from somewhere unintended. Removing the respositories is not a must, but recommended. 
 
 We also assume that we have access to the sles12sp3 server iso and sles12sp3sdk iso. In the example below they have been "inserted" into cdrom 0 and cdrom 1. In reality the example comes from a vm, so the isos have been connected to the vm using virt-manager. 
@@ -58,4 +53,51 @@ At the end your repositories shoudl look something like so:
  3 | SLES12-SP3_12.3-0                  | SLES12-SP3 12.3-0                    | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr1```
 
 
-Next we need to mysql repositories. 
+#### Install some packages
+```
+sudo zypper install -y git
+sudo zypper install -y lsb-release
+sudo zypper install -y python-os-testr
+```
+
+#### Install pip
+```
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python ./get-pip.py
+```
+
+
+#### Install mysql repositories. 
+```
+wget https://dev.mysql.com/get/mysql57-community-release-sles12-11.noarch.rpm
+sudo rpm -Uvh mysql57-community-release-sles12-11.noarch.rpm
+sudo rpm --import /etc/RPM-GPG-KEY-mysql
+```
+#### Clone devstack and patch
+(hopefully at some point this patch or one similar merges):
+https://review.openstack.org/#/c/505433/ 
+
+```
+sudo mkdir /opt/stack
+sudo chown stack /opt/stack
+cd /opt/stack
+git clone https://git.openstack.org/openstack-dev/devstack
+git fetch https://git.openstack.org/openstack-dev/devstack refs/changes/33/505433/2 && git cherry-pick FETCH_HEAD
+```
+#### Stack
+we'll use a basic local.conf here:
+```
+cat /opt/stack/devstack/local.conf
+
+[[local|localrc]]
+ADMIN_PASSWORD=secret
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+```
+
+Stack using FORCE=yes (disables distro requirement)
+```
+FORCE=yes /opt/stack/devstack/stack.sh
+```
+
