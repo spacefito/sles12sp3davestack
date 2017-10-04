@@ -1,4 +1,4 @@
-# sles12sp3davestack
+# sles12sp3devstack
 
 Getting devstack to deploy on sles12sp3 
 This site contains links to patches and instructions on how to deploy devstack on a sles12 sp3 server. 
