@@ -14,8 +14,8 @@ stack@dev:/opt/stack/devstack> FORCE=yes ./stack.sh
 ```
 
 Sles12sp3 comes with MariaDB, which is the prefered databse solution in a SLES deployment. However devstack is usually deployed onto a mysql database (the default).  In order to not confuse the subject we'll split the task into two different sections. 
-- One: deploy devstack on sles12sp3 using a mysql backend
-- Two: deploy devstack on sles12sp3 using a MariaDB backend
+- One: deploy devstack on sles12sp3 using a MariaDB backend
+- Two: deploy devstack on sles12sp3 using a mysql-common backend
 
 
 ### Zero: install and configure sles12 sp3 for devstack
@@ -32,7 +32,74 @@ A quick outline
 
 NOTE: in sles12sp3 the "sudo" group is the "wheel" group.
 
-### One: devstack on sles12 sp3 using mysql backend
+
+### ONE: devstack on sles12 sp3 using mariadb backend
+#### Instsall basic repositories
+We'll start with three repositories to add. Ideally we should remove all other respositories just to be safe that we don't pull the wrong pacakge version from somewhere unintended. Removing the respositories is not a must, but recommended. 
+
+We also assume that we have access to the sles12sp3 server iso and sles12sp3sdk iso. In the example below they have been "inserted" into cdrom 0 and cdrom 1. In reality the example comes from a vm, so the isos have been connected to the vm using virt-manager. 
+
+`sudo zypper ar https://download.opensuse.org/repositories/Cloud:/OpenStack:/Newton/SLE_12_SP3/ CloudSP3`
+
+To mount the iso as repositories you should use yast. I will not even attempt to put the commands because they simply would be wrong. Just use yast!
+
+At the end your repositories shoudl look something like so:
+
+```  
+ # | Alias                              | Name                                 | Enabled | GPG Check | Refresh | URI
+---+------------------------------------+--------------------------------------+---------+-----------+---------+--------------------------------------------------------------------------------
+ 1 | CloudSP3                           | CloudSP3                             | Yes     | (r ) Yes  | No      |https://download.opensuse.org/repositories/Cloud:/OpenStack:/Newton/SLE_12_SP3/
+ 2 | SDK12-SP3_12.3-0                   | SDK12-SP3 12.3-0                     | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr2
+ 3 | SLES12-SP3_12.3-0                  | SLES12-SP3 12.3-0                    | Yes     | (r ) Yes  | No      | cd:///?devices=/dev/sr1
+ ```
+
+#### Install some packages
+
+```
+sudo zypper install -y git
+sudo zypper install -y lsb-release
+sudo zypper install -y python-os-testr
+```
+
+#### Install pip
+```
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python ./get-pip.py
+```
+
+#### Clone devstack and patch
+(hopefully at some point this patches or similar ones have merges):
+git fetch git://git.openstack.org/openstack-dev/devstack refs/changes/82/509682/3 && git checkout FETCH_HEAD
+
+```
+sudo mkdir /opt/stack
+sudo chown stack /opt/stack
+cd /opt/stack
+git clone https://git.openstack.org/openstack-dev/devstack
+cd devstack
+git fetch git://git.openstack.org/openstack-dev/devstack refs/changes/82/509682/3 && git checkout FETCH_HEAD
+git checkout -b sles12devstack
+```
+#### Stack
+we'll use a basic local.conf here:
+```
+cat /opt/stack/devstack/local.conf
+
+[[local|localrc]]
+ADMIN_PASSWORD=secret
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+```
+
+runs stack.sh
+```
+/opt/stack/devstack/stack.sh
+```
+
+
+### TWO: devstack on sles12 sp3 using mysql backend
+    (WARNING: once mariadb support has merged for SUSE in devstack, (https://review.openstack.org/#/c/509682,https://review.openstack.org/#/c/506848) this procedure might become invalid).
 
 #### Instsall basic repositories
 We'll start with three repositories to add. Ideally we should remove all other respositories just to be safe that we don't pull the wrong pacakge version from somewhere unintended. Removing the respositories is not a must, but recommended. 
