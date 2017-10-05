@@ -162,7 +162,16 @@ DATABASE_PASSWORD=$ADMIN_PASSWORD
 RABBIT_PASSWORD=$ADMIN_PASSWORD
 SERVICE_PASSWORD=$ADMIN_PASSWORD
 ```
+or alternatively if you just want to do a quick test of the database backend you can use the following as well
+```
+[[local|localrc]]
+ADMIN_PASSWORD=secret
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+ENABLED_SERVICES=keystone,rabbit,mysql
 
+```
 Stack using FORCE=yes (disables distro requirement)
 ```
 FORCE=yes /opt/stack/devstack/stack.sh
