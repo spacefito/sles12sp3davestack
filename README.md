@@ -68,8 +68,7 @@ sudo python ./get-pip.py
 ```
 
 #### Clone devstack and patch
-(hopefully at some point this patches or similar ones have merges):
-git fetch git://git.openstack.org/openstack-dev/devstack refs/changes/82/509682/3 && git checkout FETCH_HEAD
+Hopefully at some point this patch or similar one has merges: https://review.openstack.org/#/c/509682
 
 ```
 sudo mkdir /opt/stack
@@ -142,7 +141,7 @@ sudo rpm -Uvh mysql57-community-release-sles12-11.noarch.rpm
 sudo rpm --import /etc/RPM-GPG-KEY-mysql
 ```
 #### Clone devstack and patch
-(hopefully at some point this patch or one similar merges):
+Use this abandoned patch
 https://review.openstack.org/#/c/505433/ 
 
 ```
