@@ -98,7 +98,7 @@ runs stack.sh
 
 
 ### TWO: devstack on sles12 sp3 using mysql backend
-    (WARNING: once mariadb support has merged for SUSE in devstack, (https://review.openstack.org/#/c/509682,https://review.openstack.org/#/c/506848) this procedure might become invalid).
+WARNING: once mariadb support has merged for SUSE in devstack, (https://review.openstack.org/#/c/509682,https://review.openstack.org/#/c/506848) this procedure might become invalid.
 
 #### Instsall basic repositories
 We'll start with three repositories to add. Ideally we should remove all other respositories just to be safe that we don't pull the wrong pacakge version from somewhere unintended. Removing the respositories is not a must, but recommended. 
