@@ -20,7 +20,7 @@ Sles12sp3 comes with MariaDB, which is the prefered databse solution in a SLES d
 
 ### Zero: install and configure sles12 sp3 for devstack
 Basically install sles12 sp3 and configure as you would for any other deployment, but for SUSE :). 
-This place is got pretty good instructions: http://nubla.do/devstack-opensuse/
+This place is got pretty good instructions: https://en.opensuse.org/SDB:DevStack
 
 A quick outline
 - Install Git
